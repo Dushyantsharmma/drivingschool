@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Brand Colors */
+  --navy-dark: #0b1120;
+  --navy-light: #1e293b;
+  --gold-primary: #f59e0b;
+  --gold-light: #fcd34d;
+}
+
+/* =========================
+   BASE LAYER
+========================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    background-color: #f8fafc; /* LIGHT BASE */
+    color: #0f172a; /* slate-900 */
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: rgba(245, 158, 11, 0.25);
+    color: #78350f;
+  }
+
+  /* Scrollbar (Subtle) */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+}
+
+/* =========================
+   COMPONENTS
+========================= */
+@layer components {
+  /* Glass (USE RARELY) */
+  .glass-panel {
+    @apply bg-white/80 backdrop-blur-md border border-slate-200 shadow-sm;
+  }
+
+  .glass-card {
+    @apply bg-white border border-slate-200 rounded-xl shadow-sm;
+  }
+
+  /* Headings */
+  .heading-hero {
+    @apply text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight;
+  }
+
+  /* Section spacing (REDUCED) */
+  .section-padding {
+    @apply py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8;
+  }
+
+  .container-max {
+    @apply max-w-7xl mx-auto;
+  }
+
+  /* Accent text */
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-500 to-orange-500;
+  }
+}
+
+/* =========================
+   UTILITIES
+========================= */
+@layer utilities {
+  /* Motion safety */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float,
+    .animate-blob,
+    .animate-spin-slow,
+    .animate-pulse-slow {
+      animation: none;
+    }
+  }
+
+  /* Soft hover lift */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+}
+
+/* =========================
+   FORM FIXES
+========================= */
+input[type="date"] {
+  background: white;
+  color: #0f172a;
+  border: 1px solid #cbd5f5;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: none;
+  cursor: pointer;
+}
