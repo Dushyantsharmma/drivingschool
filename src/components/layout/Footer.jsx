@@ -21,7 +21,7 @@ const Footer = () => {
           <div className="flex items-center gap-3 mb-4">
             <div className="w-16 h-16 rounded-full overflow-hidden border border-white/10">
               <img
-                src="/branding/raj-ann-raj-logo.jpeg"
+                src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.jpeg`}
                 alt="Raj Ann Raj Driving School"
                 className="w-full h-full object-cover scale-150"
               />

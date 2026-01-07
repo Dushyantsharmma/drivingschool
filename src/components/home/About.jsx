@@ -169,7 +169,7 @@ My mission is simple: to build a generation of drivers who value safety over spe
               {/* Mobile gradient overlay */}
               <div className="absolute inset-0 sm:hidden bg-gradient-to-t from-[#0B1120] to-transparent z-10" />
               <img
-                src="/team/owner-pushp-raj.webp"
+                src={`${import.meta.env.BASE_URL}team/owner-pushp-raj.webp`}
                 alt="Pushp Raj"
                 className="w-full h-full object-cover"
               />
@@ -201,7 +201,7 @@ My mission is simple: to build a generation of drivers who value safety over spe
           {/* Team Member – Tarun */}
           <div className="lg:col-span-6 bg-white rounded-2xl p-4 flex gap-4 items-center border border-slate-100 hover-lift">
             <img
-              src="/team/tarun-bala-clerk.webp"
+              src={`${import.meta.env.BASE_URL}team/tarun-bala-clerk.webp`}
               alt="Tarun Bala"
               className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover"
             />
@@ -219,7 +219,7 @@ My mission is simple: to build a generation of drivers who value safety over spe
           {/* Team Member – Girdhari */}
           <div className="lg:col-span-6 bg-white rounded-2xl p-4 flex gap-4 items-center border border-slate-100 hover-lift">
             <img
-              src="/team/Instructor-girdhari-lal-Roadtest-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1.webp"
+              src={`${import.meta.env.BASE_URL}team/Instructor-girdhari-lal-Roadtest-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1.webp`}
               alt="Girdhari Lal"
               className="w-20 h-20 sm:w-24 sm:h-24 rounded-xl object-cover"
             />

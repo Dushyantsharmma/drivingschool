@@ -2,6 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Inter font for premium headings -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    <script>
+      (function() {
+        const originalDebug = console.debug;
+        const originalLog = console.log;
+        
+        const filterViteLogs = (args, originalFn) => {
+          if (args.length > 0 && typeof args[0] === 'string' && 
+              (args[0].includes('[vite] connecting...') || args[0].includes('[vite] connected.'))) {
+            return;
+          }
+          originalFn.apply(console, args);
+        };
+
+        console.debug = function(...args) { filterViteLogs(args, originalDebug); };
+        console.log = function(...args) { filterViteLogs(args, originalLog); };
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/branding/raj-ann-raj-logo.jpeg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     

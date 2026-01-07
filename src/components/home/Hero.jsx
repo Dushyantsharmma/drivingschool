@@ -29,10 +29,16 @@ const Hero = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl 
-                       font-bold text-amber-500 leading-tight tracking-tight max-w-4xl"
+            className="font-bold text-amber-500 leading-tight tracking-tight"
+            style={{
+              fontSize: 'clamp(2rem, 6vw, 4rem)',
+              maxWidth: '90vw',
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word',
+              margin: '0 auto',
+            }}
           >
-            Master the Art of <br className="hidden md:block max-w-2xl" />
+            Master the Art of <br className="hidden md:block" />
             <span className="text-white">Hill Driving</span>
           </motion.h1>
 
@@ -42,8 +48,14 @@ const Hero = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="mt-6 text-base md:text-xl text-slate-400 
-                       max-w-3xl mx-auto leading-relaxed px-2"
+            className="mt-6 text-slate-400 leading-relaxed px-2"
+            style={{
+              fontSize: 'clamp(1rem, 3vw, 1.5rem)',
+              maxWidth: '95vw',
+              wordBreak: 'break-word',
+              overflowWrap: 'break-word',
+              margin: '0 auto',
+            }}
           >
             Learn safe and confident driving on real hill roads with
             <strong className="text-white font-semibold">

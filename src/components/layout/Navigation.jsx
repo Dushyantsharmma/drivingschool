@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Phone, MessageCircle, Menu, X } from 'lucide-react';
+import GoogleTranslate from '../common/GoogleTranslate';
 
 const navItems = [
   { name: 'Home', to: '/' },
@@ -20,28 +21,34 @@ const Navigation = () => {
       <nav className="fixed top-0 inset-x-0 z-50 bg-[#0f172a] border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 h-[72px] flex items-center justify-between">
 
-          {/* LOGO */}
-          <button
-            onClick={() => navigate('/')}
-            className="flex items-center gap-3"
-          >
-            {/* Logo Container with Zoom */}
-            <div className="w-16 h-16 rounded-full overflow-hidden border border-white/10">
-              <img
-                src="/branding/raj-ann-raj-logo.jpeg"
-                alt="Raj Ann Raj Driving School"
-                className="w-full h-full object-cover scale-150"
-              />
+          {/* LOGO + TRANSLATE TOGGLE */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => navigate('/')}
+              className="flex items-center gap-3"
+            >
+              {/* Logo Container with Zoom */}
+              <div className="w-16 h-16 rounded-full overflow-hidden border border-white/10">
+                <img
+                  src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.jpeg`}
+                  alt="Raj Ann Raj Driving School"
+                  className="w-full h-full object-cover scale-150"
+                />
+              </div>
+              <div className="leading-tight text-left">
+                <span className="block text-amber-500 font-bold text-lg">
+                  Raj Ann Raj
+                </span>
+                <span className="block text-white text-xs uppercase tracking-wider">
+                  Driving School
+                </span>
+              </div>
+            </button>
+            {/* Translate toggle next to logo */}
+            <div className="ml-2">
+              <GoogleTranslate />
             </div>
-            <div className="leading-tight text-left">
-              <span className="block text-amber-500 font-bold text-lg">
-                Raj Ann Raj
-              </span>
-              <span className="block text-white text-xs uppercase tracking-wider">
-                Driving School
-              </span>
-            </div>
-          </button>
+          </div>
 
           {/* DESKTOP LINKS */}
           <div className="hidden lg:flex items-center gap-8">
@@ -66,15 +73,9 @@ const Navigation = () => {
 
           {/* ACTIONS */}
           <div className="flex items-center gap-3">
-            <a
-              href="https://wa.me/919882034930"
-              className="hidden md:flex items-center gap-2 px-5 py-2.5
-                         bg-green-600 hover:bg-green-500
-                         text-white text-sm font-bold rounded-full"
-            >
-              <MessageCircle size={18} />
-              WhatsApp
-            </a>
+             {/* Translate toggle is now next to logo above */}
+
+            {/* WhatsApp button removed as requested */}
 
             {/* MOBILE TOGGLE */}
             <button
@@ -97,7 +98,9 @@ const Navigation = () => {
             <X size={28} />
           </button>
 
-          <div className="space-y-6">
+          <div className="space-y-6 flex flex-col items-center">
+             <GoogleTranslate /> 
+
             {navItems.map(item => (
               <NavLink
                 key={item.to}

@@ -117,13 +117,9 @@ const DashboardTrainer = () => {
 
       <div className="relative max-w-2xl mx-auto rounded-2xl overflow-hidden shadow-2xl bg-[#1a1a1a] border-4 border-slate-800">
         <img
-          src="/dashboard/dashboard-base.webp.png"
+          src={`${import.meta.env.BASE_URL}dashboard/dashboard-base.webp.png`}
           alt="Car Dashboard Visualization"
           className="w-full opacity-80"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = "raj-ann-raj-driving-school/public/dashboard/dashboard-base.webp.png";
-          }}
         />
 
         {DASHBOARD_SIGNS.map((sign) => (

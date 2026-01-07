@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const IMAGES = [
-  { src: '/banners/Banner1.png', alt: 'Driving Training Session' },
-  { src: '/banners/Banner2.png', alt: 'Expert Driving Instructors' },
-  { src: '/banners/Banner3.png', alt: 'Safe Driving Practice' },
+  { src: `${import.meta.env.BASE_URL}banners/Banner1.png`, alt: 'Driving Training Session' },
+  { src: `${import.meta.env.BASE_URL}banners/Banner2.png`, alt: 'Expert Driving Instructors' },
+  { src: `${import.meta.env.BASE_URL}banners/Banner3.png`, alt: 'Safe Driving Practice' },
 ];
 
 const ImageSlideshow = () => {

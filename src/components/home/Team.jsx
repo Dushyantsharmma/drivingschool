@@ -12,7 +12,7 @@ const Team = () => {
           <div className="flex flex-col items-center text-center group h-full">
             <div className="w-full aspect-square rounded-2xl overflow-hidden glow-card mb-4 group-hover:scale-105 transition-all duration-300 bg-white">
               <img 
-                src="/team/Instructor-girdhari-lal-Roadtest-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1.webp" 
+                src={`${import.meta.env.BASE_URL}team/Instructor-girdhari-lal-Roadtest-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1.webp`}
                 alt="Girdhari Lal" 
                 className="w-full h-full object-cover"
               />
@@ -26,7 +26,7 @@ const Team = () => {
           <div className="flex flex-col items-center text-center h-full">
             <div className="w-full aspect-square rounded-2xl overflow-hidden glow-card-gold mb-4 transition-all duration-300 bg-white">
               <img 
-                src="/team/owner-pushp-raj.webp" 
+                src={`${import.meta.env.BASE_URL}team/owner-pushp-raj.webp`}
                 alt="Pushp Raj" 
                 className="w-full h-full object-cover"
               />
@@ -47,7 +47,7 @@ const Team = () => {
           <div className="flex flex-col items-center text-center group h-full">
             <div className="w-full aspect-square rounded-2xl overflow-hidden glow-card mb-4 group-hover:scale-105 transition-all duration-300 bg-white">
               <img 
-                src="/team/tarun-bala-clerk.webp" 
+                src={`${import.meta.env.BASE_URL}team/tarun-bala-clerk.webp`}
                 alt="Tarun Bala" 
                 className="w-full h-full object-cover"
               />

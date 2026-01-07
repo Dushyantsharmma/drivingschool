@@ -3,11 +3,13 @@
 @tailwind utilities;
 
 :root {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 
   /* Brand Colors */
   --navy-dark: #0b1120;
   --navy-light: #1e293b;
+  html, body {
+    scroll-behavior: smooth;
+  }
   --gold-primary: #f59e0b;
   --gold-light: #fcd34d;
 }
@@ -21,6 +23,11 @@
     -webkit-font-smoothing: antialiased;
     background-color: #f8fafc; /* LIGHT BASE */
     color: #0f172a; /* slate-900 */
+  }
+  h1, h2, h3, h4, strong {
+    font-family: 'Inter', 'system-ui', 'sans-serif';
+    font-weight: 700;
+    letter-spacing: -0.01em;
   }
 
   body {

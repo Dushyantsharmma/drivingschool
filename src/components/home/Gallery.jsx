@@ -41,8 +41,8 @@ const Gallery = () => {
 
   const allImages = useMemo(() => {
     const modules = import.meta.glob(
-      "/public/gallery/**/*.{jpg,jpeg,png,webp,svg}",
-      { eager: true, as: "url" }
+      "/gallery/**/*.{jpg,jpeg,png,webp,svg}",
+      { eager: true, query: '?url', import: 'default' }
     );
 
     return Object.entries(modules)
@@ -52,7 +52,13 @@ const Gallery = () => {
         const title = formatTitle(filename, category);
         const location = getLocation(category);
         const alt = `Raj Ann Raj Driving School - ${category} - ${title}`;
-        return { src: url, title, category, location, alt, filename };
+
+        // Handle images relative to base path
+        const safeUrl = (typeof url === 'string' && url.startsWith('/') && !url.startsWith(import.meta.env.BASE_URL))
+           ? `${import.meta.env.BASE_URL}${url.substring(1)}`
+           : url;
+
+        return { src: safeUrl, title, category, location, alt, filename };
       })
       .sort((a, b) => a.filename.localeCompare(b.filename));
   }, []);

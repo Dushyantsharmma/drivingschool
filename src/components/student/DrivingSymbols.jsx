@@ -12,8 +12,9 @@ import {
 } from "lucide-react";
 import SEO from "../SEO";
 
+
 /* =====================
-  DATA (Auto-loaded from /public/symbols)
+  DATA (Auto-loaded from /symbols)
 ===================== */
 
 const ROAD_SIGN_SECTIONS = [
@@ -172,8 +173,13 @@ const toSigns = (modules, sectionKey) => {
     const name = meta?.name || (numMatch ? `Sign ${base}` : base || "Sign");
     const desc = meta?.desc || "Click to view details.";
 
+    // Handle images relative to base path
+    const safeUrl = (typeof url === 'string' && url.startsWith('/') && !url.startsWith(import.meta.env.BASE_URL))
+      ? `${import.meta.env.BASE_URL}${url.substring(1)}`
+      : url;
+
     return {
-      img: url,
+      img: safeUrl,
       name,
       desc,
       file,
@@ -236,7 +242,7 @@ const DrivingSymbols = () => {
           
           <div className="mt-8 flex justify-center">
             <img 
-              src="/symbols/Symbol-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1indian-road-signs.webp" 
+              src={`${import.meta.env.BASE_URL}symbols/Symbol-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1indian-road-signs.webp`}
               alt="Indian Road Signs Chart - Raj Ann Raj Driving School" 
               className="max-w-full h-auto rounded-xl shadow-lg border border-slate-100"
               loading="lazy"

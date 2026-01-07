@@ -353,7 +353,7 @@ const RTOInfo = () => {
                     </h3>
                     <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200">
                       <img
-                        src="/symbols/Driving Test Route.png"
+                        src={`${import.meta.env.BASE_URL}symbols/Driving Test Route.png`}
                         alt="Driving Test Route Diagram"
                         className="w-full h-auto object-contain p-4"
                       />

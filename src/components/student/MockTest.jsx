@@ -14,109 +14,12 @@ import {
   Download,
   ShieldAlert,
   Signal,
-  Gauge
+  Gauge,
+  Eye,
+  ArrowLeft
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
-
-// --- QUESTION BANK (90 Total Questions) ---
-const QUESTION_BANK = {
-  easy: [
-    { q: "What does a red traffic light mean?", options: ["Go", "Stop", "Slow down", "Caution"], correct: 1 },
-    { q: "What is the minimum age for a learner's license (car)?", options: ["16", "18", "21", "25"], correct: 1 },
-    { q: "When should you use the horn?", options: ["To greet friends", "In silence zones", "To alert of danger", "Always"], correct: 2 },
-    { q: "What is the shape of a mandatory sign?", options: ["Circle", "Triangle", "Square", "Rectangle"], correct: 0 },
-    { q: "What does a yellow traffic light mean?", options: ["Stop if safe", "Speed up", "Go", "Turn left"], correct: 0 },
-    { q: "Which side of the road must you drive on in India?", options: ["Left", "Right", "Middle", "Any"], correct: 0 },
-    { q: "What do zebra crossings indicate?", options: ["Parking zone", "Pedestrian crossing", "No stopping", "Speed breaker"], correct: 1 },
-    { q: "When approaching a roundabout, who has right of way?", options: ["Traffic entering", "Traffic already in roundabout", "Bigger vehicles", "Motorcycles"], correct: 1 },
-    { q: "You should overtake a vehicle from which side?", options: ["Left", "Right", "Any safe side", "Never overtake"], correct: 1 },
-    { q: "What does a continuous yellow line mean?", options: ["Overtaking allowed", "No overtaking", "Parking allowed", "End of road"], correct: 1 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/1.jpg", options: ["No Entry", "One Way", "Stop", "No Parking"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/31.jpg", options: ["Stop", "Give Way", "No Entry", "Speed Limit"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/15.jpg", options: ["School Ahead", "Men at Work", "Pedestrian Crossing", "Park"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/19.jpg", options: ["Speed Limit 50", "Route 50", "Distance 50km", "Weight 50 tons"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/17.jpg", options: ["No Horn", "Sound Horn", "Music Prohibited", "Silence Zone End"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/36.jpg", options: ["Speed Breaker", "Hump", "Rough Road", "Bridge"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/informatory/2.jpg", options: ["Petrol Pump", "Parking", "Hospitcal", "Garage"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/16.jpg", options: ["Overtaking Prohibited", "No Entry", "Two Way Traffic", "U-Turn Prohibited"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/18.jpg", options: ["No Parking", "No Stopping", "No Entry", "Speed Limit"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/1.jpg", options: ["Right Hand Curve", "Left Hand Curve", "U-Turn", "Roundabout"], correct: 0 },
-    { q: "What is the validity of a learner's license?", options: ["3 months", "6 months", "1 year", "Permanent"], correct: 1 },
-    { q: "Can you reverse on a one-way street?", options: ["Yes", "No", "Only if empty", "At night"], correct: 1 },
-    { q: "What document must be in the car?", options: ["RC & Insurance", "Passport", "Voter ID", "Electricity Bill"], correct: 0 },
-    { q: "What is 'Tailgating'?", options: ["Driving too close behind", "Driving continuously", "Overtaking", "Parking backward"], correct: 0 },
-    { q: "When can you use high beam?", options: ["Always at night", "When no oncoming traffic", "In city", "During rain"], correct: 1 },
-    { q: "What does 'ABS' stand for?", options: ["Anti-lock Braking System", "Auto Brake Setup", "All Brake System", "Active Brake Safety"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/23.jpg", options: ["Compulsory Left Turn", "No Left Turn", "One Way", "Left Curve"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/20.jpg", options: ["Cross Road", "Hospital", "First Aid", "Church"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/12.jpg", options: ["Pedestrians Prohibited", "School Ahead", "Men at Work", "Crossing"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/11.jpg", options: ["Narrow Bridge", "Narrow Road", "Road Widens", "Gap in Median"], correct: 0 },
-  ],
-  medium: [
-    { q: "What is the legal blood alcohol limit?", options: ["30mg/100ml", "0mg", "50mg/100ml", "100mg/100ml"], correct: 0 },
-    { q: "When parking uphill with a curb, wheels should face:", options: ["Away from curb", "Towards curb", "Straight", "Any direction"], correct: 0 },
-    { q: "What is the maximum speed in residential areas (if not marked)?", options: ["30 km/h", "50 km/h", "80 km/h", "No limit"], correct: 1 },
-    { q: "When causing an accident, you must report to police within:", options: ["12 hours", "24 hours", "48 hours", "7 days"], correct: 1 },
-    { q: "What does a flashing red light mean?", options: ["Stop, look, proceed", "Go fast", "Wait for green", "Do not enter"], correct: 0 },
-    { q: "The '3-second rule' applies to:", options: ["Following distance", "Parking time", "Traffic light waiting", "Engine warmup"], correct: 0 },
-    { q: "Blue road signs usually indicate:", options: ["Information/Service", "Ordering/Mandatory", "Warning", "Prohibition"], correct: 0 },
-    { q: "Triangular signs with red borders are:", options: ["Cautionary", "Mandatory", "Informatory", "Tourist"], correct: 0 },
-    { q: "Circular signs with Blue background are:", options: ["Compulsory/Mandatory", "Cautionary", "Informatory", "Destinations"], correct: 0 },
-    { q: "What does a broken white line mean?", options: ["Overtaking allowed with care", "No Overtaking", "Stop line", "Parking zone"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/22.jpg", options: ["Restriction Ends", "No Entry", "No Parking", "End of Road"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/2.jpg", options: ["One Way", "Keep Left", "Go Straight", "No Entry"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/4.jpg", options: ["Left Hairpin Bend", "Left Reverse Bend", "Left Curve", "Narrow Road"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/7.jpg", options: ["Steep Ascent", "Steep Descent", "Falling Rocks", "Hump"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/35.jpg", options: ["Loose Gravel", "Slippery Road", "Falling Rocks", "Men at Work"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/informatory/3.jpg", options: ["Hospital", "First Aid", "Doctor", "Pharmacy"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/21.jpg", options: ["Load Limit (Axle)", "Height Limit", "Width Limit", "Speed Limit"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/6.jpg", options: ["Trucks Prohibited", "Cars Prohibited", "All Vehicles Prohibited", "Heavy Vehicles Only"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/18.jpg", options: ["Falling Rocks", "Landslide", "Hill Area", "Quarry"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/22.jpg", options: ["Side Road Right", "Turn Right", "Y Intersection", "Merge"], correct: 0 },
-    { q: "Seat belts are mandatory for:", options: ["Driver only", "Front passengers", "All passengers", "Front & Rear passengers"], correct: 3 },
-    { q: "Using mobile while driving attracts:", options: ["Fine & License Suspension", "Warning only", "No penalty", "Small fine"], correct: 0 },
-    { q: "What to do if brakes fail?", options: ["Pump brakes & downshift", "Pull handbrake hard", "Switch off engine", "Jump out"], correct: 0 },
-    { q: "Where is parking prohibited?", options: ["Near road corners", "In parking lots", "On one-way streets", "In front of shops"], correct: 0 },
-    { q: "Meaning of 'Give Way' sign:", options: ["Yield to other traffic", "Stop completely", "Go fast", "Parking allowed"], correct: 0 },
-    { q: "Minimum tread depth for tires:", options: ["1.6mm", "0.5mm", "3mm", "5mm"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/27.jpg", options: ["Compulsory Ahead or Left", "Left Turn Only", "No Right Turn", "Keep Left"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/32.jpg", options: ["Dangerous Dip", "Hump", "Rough Road", "River"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/19.jpg", options: ["Ferry", "Boat House", "Swimming", "Port"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/informatory/8.jpg", options: ["No Through Road", "Dead End", "T-Point", "Red Light"], correct: 0 },
-  ],
-  hard: [
-    { q: "When skidding on a wet road, you should:", options: ["Steer in direction of skid", "Brake hard", "Accelerate", "Turn opposite to skid"], correct: 0 },
-    { q: "What is 'Defensive Driving'?", options: ["Anticipating hazards", "Driving slowly", "Driving aggressively", "Obeying signals only"], correct: 0 },
-    { q: "What is the penalty for driving without insurance?", options: ["Fine and/or Imprisonment", "Warning", "Community Service", "License Cancel"], correct: 0 },
-    { q: "In a manual car, 'riding the clutch' means:", options: ["Resting foot on clutch pedal", "Pressing clutch fully", "Releasing clutch fast", "Ignoring clutch"], correct: 0 },
-    { q: "What is 'engine braking'?", options: ["Slowing using gears", "Switching off engine", "Using handbrake", "Jamming brakes"], correct: 0 },
-    { q: "At an uncontrolled intersection, right of way belongs to:", options: ["Vehicle on the right", "Vehicle on the left", "Faster vehicle", "Larger vehicle"], correct: 0 },
-    { q: "When towing a vehicle, the tow rope max length is:", options: ["5 meters", "10 meters", "2 meters", "15 meters"], correct: 0 },
-    { q: "A PUC certificate is valid for (new car):", options: ["1 year", "6 months", "3 months", "2 years"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/10.jpg", options: ["Handcart Prohibited", "Bullock Cart Prohibited", "Cycle Prohibited", "Pedestrian Prohibited"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/25.jpg", options: ["Compulsory Ahead Only", "One Way", "No Turns", "Airport"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/26.jpg", options: ["Staggered Intersection", "Cross Road", "Z-Bend", "Zig Zag"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/8.jpg", options: ["Steep Descent", "Steep Ascent", "Low Gear Area", "Slope"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/17.jpg", options: ["Cattle", "Wild Animals", "Zoo", "Farm"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/informatory/19.jpg", options: ["Direction Sign", "Destination Sign", "Highway", "Toll Plaza"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/28.jpg", options: ["Compulsory Keep Left", "Turn Left", "Overtake from Left", "Lane Merge"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/33.jpg", options: ["Hump or Rough Road", "Speed Breaker", "Gravel", "Construction"], correct: 0 },
-    { q: "Identifying a 'Blind Spot':", options: ["Area not seen in mirrors", "Dark tunnel", "Foggy area", "Night time driving"], correct: 0 },
-    { q: "Aquaplaning occurs when:", options: ["Tires lose contact with road due to water", "Driving in snow", "Brakes overhead", "Engine floods"], correct: 0 },
-    { q: "Hand signal for slowing down:", options: ["Arm extended, palm down, moving up/down", "Arm straight out", "Arm rotating", "Palm facing forward"], correct: 0 },
-    { q: "What does 'MSM' routine stand for?", options: ["Mirror - Signal - Maneuver", "Make - Signal - Move", "Mirror - Speed - Move", "Motor - Start - Move"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/32.jpg", options: ["Give Way", "Stop", "Merge", "No Entry"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/28.jpg", options: ["Side Road Left", "Turn Left", "Merge Left", "Junction"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/15.jpg", options: ["U-Turn Prohibited", "Right Turn Prohibited", "No Return", "End of Road"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/31.jpg", options: ["Roundabout", "Circle", "U-Turn", "Recycle"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/14.jpg", options: ["Pedestrian Crossing", "School", "Park", "Walkway"], correct: 0 },
-    { q: "Ideally, tire pressure should be checked when:", options: ["Tires are cold", "After long drive", "While refueling", "Monthly"], correct: 0 },
-    { q: "Driving with clutch depressed (Coasting) refers to:", options: ["Disconnecting engine from wheels", "Reversing", "Parking", "Braking"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/30.jpg", options: ["Compulsory Sound Horn", "No Horn", "Music Allowed", "Speaker"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/cautionary/24.jpg", options: ["Y-Intersection", "Fork", "Merge", "Split"], correct: 0 },
-    { q: "Identify this sign:", image: "/symbols/mandatory/4.jpg", options: ["Vehicles Prohibited Both Directions", "No Car", "Empty Road", "Private Road"], correct: 0 },
-  ]
-};
+import { QUESTION_BANK } from '../../data/mockTestQuestions';
 
 const MockTest = () => {
   const [selectedLevel, setSelectedLevel] = useState(null);
@@ -129,8 +32,20 @@ const MockTest = () => {
   const [answers, setAnswers] = useState([]); 
   const [timeLeft, setTimeLeft] = useState(1200); 
   const [testComplete, setTestComplete] = useState(false);
+  const [reviewMode, setReviewMode] = useState(false);
   
   const certificateRef = useRef(null);
+
+  // Reset all test-related state to initial values
+  const resetTestState = () => {
+    setDetailsFilled(false);
+    setTestStarted(false);
+    setCurrentQuestion(0);
+    setAnswers([]);
+    setTimeLeft(1200);
+    setTestComplete(false);
+    setReviewMode(false);
+  };
 
   // Helper: Shuffle Array
   const shuffleArray = (array) => {
@@ -138,6 +53,8 @@ const MockTest = () => {
   };
 
   const startTestSetup = (level) => {
+    // Ensure previous test/result state doesn't leak into new test
+    resetTestState();
     setSelectedLevel(level);
     const levelQuestions = QUESTION_BANK[level] || QUESTION_BANK.medium;
     // Pick random 20
@@ -238,9 +155,9 @@ const MockTest = () => {
 
             <div className="grid md:grid-cols-3 gap-6">
                 {[
-                    { id: 'easy', title: 'Learner', icon: Signal, color: 'bg-green-500' },
-                    { id: 'medium', title: 'Standard', icon: ShieldAlert, color: 'bg-amber-500' },
-                    { id: 'hard', title: 'Expert', icon: Gauge, color: 'bg-red-500' }
+                    { id: 'easy', title: 'Easy', icon: Signal, color: 'bg-green-500' },
+                    { id: 'medium', title: 'Medium', icon: ShieldAlert, color: 'bg-amber-500' },
+                    { id: 'hard', title: 'Difficult', icon: Gauge, color: 'bg-red-500' }
                 ].map((level) => (
                     <button
                         key={level.id}
@@ -298,7 +215,7 @@ const MockTest = () => {
             </button>
             
             <button 
-                onClick={() => setSelectedLevel(null)}
+              onClick={() => { resetTestState(); setSelectedLevel(null); }}
                 className="w-full text-slate-400 text-sm font-medium hover:text-slate-600 transition-colors"
             >
                 Back to Difficulty Selection
@@ -350,7 +267,7 @@ const MockTest = () => {
                 {question.image && (
                     <div className="mb-8 flex justify-center bg-slate-50 rounded-2xl p-6 border border-slate-100">
                         <img
-                            src={question.image}
+                            src={question.image.startsWith('/') ? `${import.meta.env.BASE_URL}${question.image.substring(1)}` : question.image}
                             alt="Traffic sign"
                             className="h-40 w-auto object-contain drop-shadow-md"
                         />
@@ -402,6 +319,79 @@ const MockTest = () => {
                 </button>
             </div>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  // --- REVIEW MODE ---
+  if (reviewMode) {
+    return (
+      <div className="p-4 md:p-8 bg-slate-50 flex flex-col items-center min-h-screen">
+        <div className="max-w-3xl w-full">
+          <div className="flex items-center justify-between mb-8">
+            <button 
+              onClick={() => setReviewMode(false)}
+              className="flex items-center gap-2 text-slate-600 font-bold hover:text-slate-900 transition-colors"
+            >
+              <ArrowLeft size={20} /> Back to Result
+            </button>
+            <h2 className="text-2xl font-bold text-slate-900">Review Answers</h2>
+          </div>
+
+          <div className="space-y-6">
+            {questions.map((q, qIndex) => {
+              const userAnswer = answers[qIndex];
+              const isCorrect = userAnswer === q.correct;
+
+              return (
+                <div key={qIndex} className={`bg-white rounded-2xl p-6 border-2 ${isCorrect ? 'border-green-100' : 'border-red-100'} shadow-sm`}>
+                  <div className="flex gap-4">
+                    <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-white ${isCorrect ? 'bg-green-500' : 'bg-red-500'}`}>
+                      {qIndex + 1}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-slate-900 mb-4">{q.q}</h3>
+                      
+                      {q.image && (
+                        <div className="mb-4 bg-slate-50 p-4 rounded-xl inline-block border border-slate-100">
+                          <img src={q.image.startsWith('/') ? `${import.meta.env.BASE_URL}${q.image.substring(1)}` : q.image} className="h-24 w-auto object-contain" alt="Sign" />
+                        </div>
+                      )}
+
+                      <div className="grid md:grid-cols-2 gap-3">
+                        {q.options.map((opt, oIndex) => {
+                          const isSelected = userAnswer === oIndex;
+                          const isTheCorrectOption = q.correct === oIndex;
+                          
+                          let style = "border-slate-100 text-slate-500 bg-slate-50/50";
+                          if (isTheCorrectOption) style = "border-green-500 bg-green-50 text-green-700 font-bold";
+                          else if (isSelected && !isCorrect) style = "border-red-500 bg-red-50 text-red-700 font-bold";
+                          
+                          return (
+                            <div key={oIndex} className={`px-4 py-2 rounded-lg border text-sm flex items-center justify-between ${style}`}>
+                              <span>{opt}</span>
+                              {isTheCorrectOption && <CheckCircle2 size={16} />}
+                              {isSelected && !isTheCorrectOption && <XCircle size={16} />}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+           <div className="py-8 text-center">
+             <button 
+              onClick={() => setReviewMode(false)}
+              className="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:bg-slate-800 transition-all"
+             >
+               Back to Result
+             </button>
+           </div>
         </div>
       </div>
     );
@@ -462,11 +452,11 @@ const MockTest = () => {
                 >
                     {/* Watermark/BG */}
                     <div className="absolute inset-0 opacity-[0.03] flex items-center justify-center pointer-events-none">
-                        <img src="/branding/raj-ann-raj-logo.jpeg" className="w-96 grayscale" />
+                        <img src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.jpeg`} className="w-96 grayscale" />
                     </div>
 
                     <div className="relative z-10">
-                        <img src="/branding/raj-ann-raj-logo.jpeg" className="w-20 h-20 mx-auto mb-4 border-4 border-white shadow-sm rounded-full" />
+                        <img src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.jpeg`} className="w-20 h-20 mx-auto mb-4 border-4 border-white shadow-sm rounded-full" />
                         
                         <h2 className="text-2xl md:text-3xl font-serif font-bold text-slate-900 mb-1">Certificate of Completion</h2>
                         <div className="h-1 w-24 bg-amber-400 mx-auto mb-6"></div>
@@ -507,12 +497,18 @@ const MockTest = () => {
           )}
 
           {/* Action Footer */}
-          <div className="p-6 bg-white text-center">
+          <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-center gap-4 bg-white">
+            <button 
+                onClick={() => setReviewMode(true)}
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-slate-100 text-slate-600 rounded-xl hover:border-[#fbbf24] hover:text-[#fbbf24] hover:bg-yellow-50 font-bold transition-all"
+            >
+                <Eye size={18} /> Review Answers
+            </button>
              <button
-                onClick={() => setSelectedLevel(null)}
-                className="text-slate-500 hover:text-slate-900 font-bold text-sm flex items-center gap-2 mx-auto transition-colors"
+               onClick={() => { resetTestState(); setSelectedLevel(null); }}
+               className="flex items-center justify-center gap-2 px-6 py-3 bg-slate-100 text-slate-600 rounded-xl hover:bg-slate-200 font-bold transition-all"
              >
-               <RotateCcw size={16} /> Take Another Test
+               <RotateCcw size={18} /> Take Another Test
              </button>
           </div>
         </motion.div>
