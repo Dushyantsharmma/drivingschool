@@ -193,16 +193,16 @@ const toSigns = (modules, sectionKey) => {
 // Build-time glob: includes every image inside /public/symbols/*
 const ROAD_SIGN_IMAGES = {
   mandatory: import.meta.glob(
-    "../../../public/symbols/mandatory/*.{jpg,jpeg,png,webp,svg}",
-    { eager: true, as: "url" }
+    "/symbols/mandatory/*.{jpg,jpeg,png,webp,svg}",
+    { eager: true, query: "?url", import: "default" }
   ),
   cautionary: import.meta.glob(
-    "../../../public/symbols/cautionary/*.{jpg,jpeg,png,webp,svg}",
-    { eager: true, as: "url" }
+    "/symbols/cautionary/*.{jpg,jpeg,png,webp,svg}",
+    { eager: true, query: "?url", import: "default" }
   ),
   informatory: import.meta.glob(
-    "../../../public/symbols/informatory/*.{jpg,jpeg,png,webp,svg}",
-    { eager: true, as: "url" }
+    "/symbols/informatory/*.{jpg,jpeg,png,webp,svg}",
+    { eager: true, query: "?url", import: "default" }
   ),
 };
 
@@ -218,178 +218,203 @@ const ROAD_SIGN_LISTS = {
 const DrivingSymbols = () => {
   const [activeTab, setActiveTab] = useState('mandatory');
   const [activeSign, setActiveSign] = useState(null);
+  const [search, setSearch] = useState("");
 
   return (
-    <div id="driving-symbols" className="bg-white overflow-hidden p-6 md:p-8">
+    <div id="driving-symbols" className="bg-[#EFEDE0] overflow-hidden p-6 md:p-8" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden' }}>
       <SEO
         title="Indian Road Signs Chart & RTO Test Prep"
         description="Official Indian road signs chart (IRC:67-1977) and interactive learning guide for Mandatory, Cautionary and Informatory signs."
         canonical="https://rajannrajdrivingschool.com/#driving-symbols"
       />
 
-      <div className="max-w-full mx-auto">
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <div className="max-w-full mx-auto">
         
-        {/* =====================
-            PART 1: HEADER
-        ===================== */}
-        <div className="text-center mb-8">
-          <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">
-            Indian <span className="text-amber-500">Road Signs</span>
-          </h2>
-          <p className="text-slate-500 mt-2 max-w-2xl mx-auto text-sm sm:text-base">
-            Essential visual guide for your RTO Learning License Exam (IRC:67-1977).
-          </p>
-          
-          <div className="mt-8 flex justify-center">
-            <img 
-              src={`${import.meta.env.BASE_URL}symbols/Symbol-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1indian-road-signs.webp`}
-              alt="Indian Road Signs Chart - Raj Ann Raj Driving School" 
-              className="max-w-full h-auto rounded-xl shadow-lg border border-slate-100"
-              loading="lazy"
-            />
-          </div>
-
-          {/* Download Action */}
-          <div className="mt-6 flex justify-center">
-            <button
-              onClick={() => {
-                
-                const link = document.createElement('a');
-                link.href = '/symbols/Symbol-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1indian-road-signs.webp';
-                link.download = 'Raj-Ann-Raj-Indian-Road-Signs.webp';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }}
-              className="flex items-center gap-2 px-6 py-3 bg-amber-500 text-black font-bold rounded-full hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/20 active:scale-95"
-            >
-              <Download size={20} />
-              Download Chart
-            </button>
-          </div>
-        </div>
-
-        {/* =====================
-            PART 2: TABS
-        ===================== */}
-        <div className="flex flex-col items-center mb-8">
-          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-6">
-            {ROAD_SIGN_SECTIONS.map((section) => (
-              <button
-                key={section.key}
-                onClick={() => setActiveTab(section.key)}
-                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-200 border ${
-                  activeTab === section.key
-                    ? 'bg-navy text-white border-navy shadow-lg shadow-navy/20'
-                    : 'bg-white text-slate-600 border-slate-200 hover:border-navy hover:text-navy'
-                }`}
-              >
-                {section.title}
-              </button>
-            ))}
-          </div>
-
-          {/* Active Tab Description */}
-          <motion.p 
-            key={activeTab}
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-slate-600 text-sm leading-relaxed max-w-2xl text-center px-4"
-          >
-            {ROAD_SIGN_SECTIONS.find(s => s.key === activeTab)?.description}
-          </motion.p>
-        </div>
-
-        {/* =====================
-            PART 3: GRID CONTENT
-        ===================== */}
-        <div className="min-h-[400px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
-            >
-              {ROAD_SIGN_LISTS[activeTab].map((sign, index) => (
-                <motion.button
-                  key={`${activeTab}-${index}`}
-                  layoutId={`sign-${activeTab}-${index}`}
-                  onClick={() => setActiveSign(sign)}
-                  className="group bg-slate-50 hover:bg-white border border-slate-100 hover:border-amber-200 rounded-xl p-4 flex flex-col items-center text-center transition-all hover:shadow-lg"
-                >
-                  <div className="w-20 h-20 mb-3 flex items-center justify-center">
-                    <img 
-                      src={sign.img} 
-                      alt={sign.name}
-                      className="max-w-full max-h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                  </div>
-                  <h3 className="text-xs font-bold text-slate-700 group-hover:text-slate-900 line-clamp-2">
-                    {sign.name}
-                  </h3>
-                </motion.button>
-              ))}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* =====================
-            PART 4: MODAL
-        ===================== */}
-        <AnimatePresence>
-          {activeSign && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" onClick={() => setActiveSign(null)}>
-              <motion.div
-                layoutId={`sign-${activeTab}-${ROAD_SIGN_LISTS[activeTab].indexOf(activeSign)}`}
-                onClick={(e) => e.stopPropagation()}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-              >
-                <button 
-                  onClick={() => setActiveSign(null)}
-                  className="absolute top-4 right-4 p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors"
-                >
-                  <X size={20} className="text-slate-600" />
-                </button>
-
-                <div className="flex flex-col items-center text-center pt-4">
-                  <div className="w-32 h-32 mb-6 flex items-center justify-center bg-slate-50 rounded-2xl p-4">
-                    <img 
-                      src={activeSign.img} 
-                      alt={activeSign.name}
-                      className="max-w-full max-h-full object-contain drop-shadow-md"
-                    />
-                  </div>
-                  
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">
-                    {activeSign.name}
-                  </h3>
-                  
-                  <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6 ${
-                    activeTab === 'mandatory' ? 'bg-red-100 text-red-700' :
-                    activeTab === 'cautionary' ? 'bg-amber-100 text-amber-700' :
-                    'bg-blue-100 text-blue-700'
-                  }`}>
-                    {activeTab} Sign
-                  </div>
-
-                  <p className="text-slate-600 leading-relaxed">
-                    {activeSign.desc}
-                  </p>
-                </div>
-              </motion.div>
+          {/* =====================
+              PART 1: HEADER
+          ===================== */}
+          <div className="text-center mb-8">
+            <h2 className="text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">
+              Indian <span className="text-amber-500">Road Signs</span>
+            </h2>
+            <p className="text-slate-500 mt-2 max-w-2xl mx-auto text-sm sm:text-base">
+              Essential visual guide for your RTO Learning License Exam (IRC:67-1977).
+            </p>
+            
+            <div className="mt-8 flex justify-center">
+              <img 
+                src={`${import.meta.env.BASE_URL}symbols/Symbol-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1indian-road-signs.webp`}
+                alt="Indian Road Signs Chart - Raj Ann Raj Driving School" 
+                className="max-w-full h-auto rounded-xl shadow-lg border border-slate-100"
+                loading="lazy"
+              />
             </div>
-          )}
-        </AnimatePresence>
 
+            {/* Download Action */}
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={() => {
+                  
+                  const link = document.createElement('a');
+                  link.href = '/symbols/Symbol-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1indian-road-signs.webp';
+                  link.download = 'Raj-Ann-Raj-Indian-Road-Signs.webp';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }}
+                className="flex items-center gap-2 px-6 py-3 bg-amber-500 text-black font-bold rounded-full hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/20 active:scale-95"
+              >
+                <Download size={20} />
+                Download Chart
+              </button>
+            </div>
+          </div>
+
+          {/* =====================
+              PART 2: TABS & SEARCH
+          ===================== */}
+          <div className="flex flex-col items-center mb-8">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-6">
+              {ROAD_SIGN_SECTIONS.map((section) => (
+                <button
+                  key={section.key}
+                  onClick={() => { setActiveTab(section.key); setSearch(""); }}
+                  className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-200 border ${
+                    activeTab === section.key
+                      ? 'bg-navy text-white border-navy shadow-lg shadow-navy/20'
+                      : 'bg-[#EFEDE0] text-slate-600 border-slate-200 hover:border-navy hover:text-navy'
+                  }`}
+                >
+                  {section.title}
+                </button>
+              ))}
+            </div>
+
+            {/* Search Bar */}
+            <div className="w-full max-w-md mb-4">
+              <input
+                type="text"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Search road signs..."
+                className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-100 outline-none text-base shadow-sm"
+              />
+            </div>
+
+            {/* Active Tab Description */}
+            <motion.p 
+              key={activeTab}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-slate-600 text-sm leading-relaxed max-w-2xl text-center px-4"
+            >
+              {ROAD_SIGN_SECTIONS.find(s => s.key === activeTab)?.description}
+            </motion.p>
+          </div>
+
+          {/* =====================
+              PART 3: GRID CONTENT
+          ===================== */}
+          <div className="min-h-[400px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
+              >
+                {ROAD_SIGN_LISTS[activeTab]
+                  .filter(sign =>
+                    sign.name.toLowerCase().includes(search.toLowerCase()) ||
+                    sign.desc.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .map((sign, index) => (
+                    <motion.button
+                      key={`${activeTab}-${index}`}
+                      layoutId={`sign-${activeTab}-${index}`}
+                      onClick={() => setActiveSign(sign)}
+                      className="group bg-slate-50 hover:bg-white border border-slate-100 hover:border-amber-200 rounded-xl p-4 flex flex-col items-center text-center transition-all hover:shadow-lg"
+                    >
+                      <div className="w-20 h-20 mb-3 flex items-center justify-center">
+                        <img 
+                          src={sign.img} 
+                          alt={sign.name}
+                          className="max-w-full max-h-full object-contain drop-shadow-sm group-hover:scale-110 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      </div>
+                      <h3 className="text-xs font-bold text-slate-700 group-hover:text-slate-900 line-clamp-2">
+                        {sign.name}
+                      </h3>
+                    </motion.button>
+                  ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* =====================
+              PART 4: MODAL
+          ===================== */}
+          <AnimatePresence>
+            {activeSign && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" onClick={() => setActiveSign(null)}>
+                <motion.div
+                  layoutId={`sign-${activeTab}-${ROAD_SIGN_LISTS[activeTab].indexOf(activeSign)}`}
+                  onClick={(e) => e.stopPropagation()}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                >
+                  <button 
+                    onClick={() => setActiveSign(null)}
+                    className="absolute top-4 right-4 p-2 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors"
+                  >
+                    <X size={20} className="text-slate-600" />
+                  </button>
+
+                  <div className="flex flex-col items-center text-center pt-4">
+                    <div className="w-32 h-32 mb-6 flex items-center justify-center bg-slate-50 rounded-2xl p-4">
+                      <img 
+                        src={activeSign.img} 
+                        alt={activeSign.name}
+                        className="max-w-full max-h-full object-contain drop-shadow-md"
+                      />
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-slate-900 mb-2">
+                      {activeSign.name}
+                    </h3>
+                    
+                    <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6 ${
+                      activeTab === 'mandatory' ? 'bg-red-100 text-red-700' :
+                      activeTab === 'cautionary' ? 'bg-amber-100 text-amber-700' :
+                      'bg-blue-100 text-blue-700'
+                    }`}>
+                      {activeTab} Sign
+                    </div>
+
+                    <p className="text-slate-600 leading-relaxed">
+                      {activeSign.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
+
+        </div>
       </div>
     </div>
   );
 };
 
-export default DrivingSymbols;
+export default function DrivingSymbolsPage() {
+  return (
+    <>
+      <DrivingSymbols />
+    </>
+  );
+}

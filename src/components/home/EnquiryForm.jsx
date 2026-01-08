@@ -280,6 +280,33 @@ const EnquiryForm = () => {
     }
   };
 
+  const triggerWhatsApp = (status) => {
+    const RAJ_NUMBER = "919882034930"; 
+    let intro = "I want to start driving lessons.";
+    
+    // If server failed, we change the message slightly
+    if (status === 'fallback') {
+      intro = "I tried to register on your site but had a connection issue. Here are my details:";
+    }
+
+    const waText = 
+      `Hello Raj Ann Raj Driving Training School 👋\n\n` +
+      `${intro}\n\n` +
+      `Name: ${formData.fullName}\n` +
+      `Mobile: ${formData.mobileNumber}\n` +
+      `Area: ${formData.pickupLocation}\n\n` +
+      `Please guide me about available slots.`;
+
+    const whatsappUrl = `https://wa.me/${RAJ_NUMBER}?text=${encodeURIComponent(waText)}`;
+    
+    // Clean up and go
+    setFormData({ 
+      fullName: '', mobileNumber: '', dateOfBirth: '', 
+      skillLevel: '', timeSlot: '', pickupLocation: '' 
+    });
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setPhoneError('');

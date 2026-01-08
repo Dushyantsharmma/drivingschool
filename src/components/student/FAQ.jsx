@@ -79,7 +79,7 @@ const FAQ = () => {
   };
 
   return (
-    <div id="faq" className="bg-white p-6 md:p-8">
+    <div id="faq" className="bg-[#EFEDE0] p-6 md:p-8">
       <SEO
         title="FAQ – Driving School Questions | Raj Ann Raj"
         description="Frequently asked questions about driving lessons, RTO tests, fees, timing, and training locations in Mandi & Karsog."
@@ -102,7 +102,7 @@ const FAQ = () => {
               transition={{ delay: index * 0.03 }}
             >
               <button
-                className="w-full text-left bg-white border border-gray-200 rounded-lg p-5 hover:border-gold/50 transition-all"
+                className="w-full text-left bg-[#EFEDE0] border border-gray-200 rounded-lg p-5 hover:border-gold/50 transition-all"
                 onClick={() => setActiveIndex(activeIndex === index ? null : index)}
                 aria-expanded={activeIndex === index}
                 aria-controls={`faq-${index}`}

@@ -143,7 +143,7 @@ const MockTest = () => {
   // --- 1. LEVEL SELECTION ---
   if (!selectedLevel) {
     return (
-      <div className="p-4 md:p-8 bg-white flex items-center justify-center min-h-[500px]">
+      <div className="p-4 md:p-8 bg-[#EFEDE0] flex items-center justify-center min-h-[500px]">
         <div className="max-w-4xl w-full text-center">
             <div className="mb-8">
                 <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
@@ -180,7 +180,7 @@ const MockTest = () => {
   // --- 2. STUDENT DETAILS ---
   if (!detailsFilled) {
     return (
-      <div className="p-4 md:p-8 bg-slate-50 flex items-center justify-center min-h-[500px]">
+      <div className="p-4 md:p-8 bg-[#EFEDE0] flex items-center justify-center min-h-[500px]">
         <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -232,7 +232,7 @@ const MockTest = () => {
     const selectedAnswer = answers[currentQuestion];
 
     return (
-      <div id="mock-test" className="p-4 md:p-8 bg-white flex items-center justify-center min-h-[600px]">
+      <div id="mock-test" className="p-4 md:p-8 bg-[#EFEDE0] flex items-center justify-center min-h-[600px]">
         <div className="max-w-3xl w-full">
           
           <div className="flex items-center justify-between mb-6">
@@ -327,7 +327,7 @@ const MockTest = () => {
   // --- REVIEW MODE ---
   if (reviewMode) {
     return (
-      <div className="p-4 md:p-8 bg-slate-50 flex flex-col items-center min-h-screen">
+      <div className="p-4 md:p-8 bg-[#EFEDE0] flex flex-col items-center min-h-screen">
         <div className="max-w-3xl w-full">
           <div className="flex items-center justify-between mb-8">
             <button 
@@ -402,12 +402,12 @@ const MockTest = () => {
   const result = getResult(score);
 
   return (
-    <div className="p-4 md:p-8 bg-white flex items-center justify-center">
+    <div className="p-4 md:p-8 bg-[#EFEDE0] flex items-center justify-center">
       <div className="max-w-4xl w-full">
         <motion.div 
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}
-           className="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100"
+           className="bg-[#EFEDE0] rounded-3xl shadow-xl overflow-hidden border border-slate-100"
         >
           {/* Header */}
           <div className="bg-[#0f172a] p-8 text-white text-center relative overflow-hidden">
@@ -448,7 +448,7 @@ const MockTest = () => {
                 {/* Certificate Preview Element */}
                 <div 
                     ref={certificateRef}
-                    className="w-full max-w-2xl bg-white p-10 py-12 rounded-xl border-4 border-double border-amber-200 text-center shadow-sm mx-auto relative overflow-hidden"
+                    className="w-full max-w-2xl bg-[#EFEDE0] p-10 py-12 rounded-xl border-4 border-double border-amber-200 text-center shadow-sm mx-auto relative overflow-hidden"
                 >
                     {/* Watermark/BG */}
                     <div className="absolute inset-0 opacity-[0.03] flex items-center justify-center pointer-events-none">
@@ -497,7 +497,7 @@ const MockTest = () => {
           )}
 
           {/* Action Footer */}
-          <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-center gap-4 bg-white">
+          <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row justify-center gap-4 bg-[#EFEDE0]">
             <button 
                 onClick={() => setReviewMode(true)}
                 className="flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-slate-100 text-slate-600 rounded-xl hover:border-[#fbbf24] hover:text-[#fbbf24] hover:bg-yellow-50 font-bold transition-all"

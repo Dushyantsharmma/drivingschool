@@ -33,7 +33,7 @@ const About = ({ variant = "full" }) => {
 
   if (variant === "brief") {
     return (
-      <section id="about" className="relative bg-slate-50 py-12">
+      <section id="about" className="relative bg-[#EFEDE0] py-12">
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             variants={fadeUp}
@@ -59,6 +59,7 @@ const About = ({ variant = "full" }) => {
                   <div
                     key={i}
                     className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-full border border-slate-200 text-xs sm:text-sm font-medium text-slate-700"
+                                  className="flex items-center gap-2 px-3 py-1.5 bg-[#EFEDE0] rounded-full border border-slate-200 text-xs sm:text-sm font-medium text-slate-700"
                   >
                     <v.icon size={16} className="text-amber-500" />
                     {v.title}
@@ -73,6 +74,7 @@ const About = ({ variant = "full" }) => {
                   <div
                     key={i}
                     className="bg-white rounded-2xl p-4 border border-slate-100"
+                                  className="bg-[#EFEDE0] rounded-2xl p-4 border border-slate-100"
                   >
                     <div className="flex items-center justify-between">
                       <div>
@@ -106,7 +108,7 @@ const About = ({ variant = "full" }) => {
   }
 
   return (
-    <section id="about" className="relative bg-slate-50 py-10 sm:py-12">
+    <section id="about" className="relative bg-[#EFEDE0] py-10 sm:py-12">
       <SEO
         title="About Raj Ann Raj Driving School"
         description="20+ years of trusted driving education in Himachal Pradesh."
@@ -155,15 +157,13 @@ const About = ({ variant = "full" }) => {
               <p className="text-amber-400 text-sm font-semibold mb-4">
                 Founder & Managing Director
               </p>
-
               <p className="text-slate-300 leading-relaxed text-sm sm:text-base mb-4">
-My mission is simple: to build a generation of drivers who value safety over speed. At Raj Ann Raj, we don't just teach you to operate a machine; we teach you to respect the road.</p>
-
+                My mission is simple: to build a generation of drivers who value safety over speed. At Raj Ann Raj, we don't just teach you to operate a machine; we teach you to respect the road.
+              </p>
               <span className="inline-block text-xs px-3 py-1 rounded-lg bg-white/10 border border-white/10">
                 Master Instructor • 20+ Years Experience
               </span>
             </div>
-
             {/* Image */}
             <div className="sm:w-2/5 h-52 sm:h-auto relative">
               {/* Mobile gradient overlay */}
@@ -182,7 +182,7 @@ My mission is simple: to build a generation of drivers who value safety over spe
               {stats.map((stat, i) => (
                 <div
                   key={i}
-                  className="min-w-[150px] flex items-center justify-between bg-white rounded-2xl p-3.5 border border-slate-100 border-l-4 border-l-amber-400"
+                  className="min-w-[150px] flex items-center justify-between bg-[#EFEDE0] rounded-2xl p-3.5 border border-slate-100 border-l-4 border-l-amber-400"
                 >
                   <div>
                     <div className="text-2xl font-bold text-slate-900">
@@ -199,7 +199,7 @@ My mission is simple: to build a generation of drivers who value safety over spe
           </div>
 
           {/* Team Member – Tarun */}
-          <div className="lg:col-span-6 bg-white rounded-2xl p-4 flex gap-4 items-center border border-slate-100 hover-lift">
+              <div className="lg:col-span-6 bg-[#EFEDE0] rounded-2xl p-4 flex gap-4 items-center border border-slate-100 hover-lift">
             <img
               src={`${import.meta.env.BASE_URL}team/tarun-bala-clerk.webp`}
               alt="Tarun Bala"
@@ -217,7 +217,7 @@ My mission is simple: to build a generation of drivers who value safety over spe
           </div>
 
           {/* Team Member – Girdhari */}
-          <div className="lg:col-span-6 bg-white rounded-2xl p-4 flex gap-4 items-center border border-slate-100 hover-lift">
+          <div className="lg:col-span-6 bg-[#EFEDE0] rounded-2xl p-4 flex gap-4 items-center border border-slate-100 hover-lift">
             <img
               src={`${import.meta.env.BASE_URL}team/Instructor-girdhari-lal-Roadtest-Raj-Ann-Raj-Bhanthal-Karsog-Mandi1.webp`}
               alt="Girdhari Lal"
@@ -239,7 +239,7 @@ My mission is simple: to build a generation of drivers who value safety over spe
             {values.map((v, i) => (
               <div
                 key={i}
-                className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-full border border-slate-200 text-xs sm:text-sm font-medium text-slate-700"
+                className="flex items-center gap-2 px-3 py-1.5 bg-[#EFEDE0] rounded-full border border-slate-200 text-xs sm:text-sm font-medium text-slate-700"
               >
                 <v.icon size={16} className="text-amber-500" />
                 {v.title}

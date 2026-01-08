@@ -9,7 +9,6 @@ export const TRAFFIC_FINES = [
   { offense: "Driving at excessive speed (Medium/Heavy Vehicle)", fine: "₹2,000 - ₹4,000 + License Seizure", section: "183" },
   { offense: "Dangerous/Rash Driving", fine: "First: ₹1,000 - ₹5,000 + 6-12 mo imprisonment\nSecond: ₹10,000 + 2 yr imprisonment", section: "184" },
   { offense: "Drunken Driving", fine: "₹10,000 + 6 mo imprisonment", section: "185" },
-  { offense: "Driving when mentally/physically unfit", fine: "First: ₹1,000\nSecond: ₹2,000", section: "186" },
   { offense: "Racing and Trials of Speed", fine: "First: ₹5,000\nSecond: ₹10,000", section: "189" },
   { offense: "Vehicle without Permit", fine: "₹10,000", section: "192A" },
   { offense: "Aggregators (Violation of licencing conditions)", fine: "₹25,000 to ₹1,00,000", section: "193" },
@@ -36,7 +35,7 @@ const TrafficFines = () => {
   );
 
   return (
-    <section className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 h-full flex flex-col">
+    <section className="bg-[#EFEDE0] rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 h-full flex flex-col">
       <div className="mb-6">
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-2 mb-2">
             <Gavel className="text-red-500" /> Traffic Penalties (India)

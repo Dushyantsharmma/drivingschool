@@ -36,26 +36,28 @@ const ImageSlideshow = () => {
             <img
               src={IMAGES[currentIndex].src}
               alt={IMAGES[currentIndex].alt}
-              className="w-full h-full object-contain bg-slate-900"
+              className="w-full h-full object-cover bg-slate-900 select-none"
+              draggable={false}
             />
           </motion.div>
         </AnimatePresence>
-        
+
         {/* Overlay Gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent pointer-events-none" />
-        
+
         {/* Dots Indicator */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        <div className="absolute bottom-3 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10 px-2">
           {IMAGES.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              className={`w-3 h-3 md:w-4 md:h-4 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-amber-400/60 ${
                 index === currentIndex 
-                  ? 'bg-amber-400 w-6' 
+                  ? 'bg-amber-400 w-8 md:w-10' 
                   : 'bg-white/50 hover:bg-white/80'
               }`}
               aria-label={`Go to slide ${index + 1}`}
+              tabIndex={0}
             />
           ))}
         </div>

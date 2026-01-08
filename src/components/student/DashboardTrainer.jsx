@@ -40,6 +40,7 @@ const DASHBOARD_SIGNS = [
     label: "Door Open",
     meaning: "One or more doors or trunk are not closed.",
     action: "Pull over safelely and ensure all doors are securely shut.",
+    action: "Pull over safely and ensure all doors are securely shut.",
     position: { top: "32%", left: "38%" },
     type: "critical" // Red in image
   },
@@ -98,7 +99,7 @@ const DashboardTrainer = () => {
   };
 
   return (
-    <section className="bg-white rounded-3xl p-6 md:p-8 glow-card">
+    <section className="bg-[#EFEDE0] rounded-3xl p-6 md:p-8 glow-card">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
         <div>
           <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-2">
@@ -145,13 +146,13 @@ const DashboardTrainer = () => {
             <div className="flex items-start gap-4">
               <div className={`mt-1 p-2 rounded-full bg-white shadow-sm ${active.type === 'critical' ? 'text-red-500' :
                   active.type === 'warning' ? 'text-amber-500' : 'text-blue-500'
-                }`}>
+                } bg-[#EFEDE0]`}>
                 {getIcon(active.type)}
               </div>
               <div>
                 <h4 className="text-lg font-bold text-slate-900 mb-1">{active.label}</h4>
                 <p className="text-slate-700 mb-3 text-sm leading-relaxed">{active.meaning}</p>
-                <div className="bg-white/60 p-3 rounded-lg inline-block">
+                <div className="bg-[#EFEDE0]/60 p-3 rounded-lg inline-block">
                   <p className={`text-sm font-bold flex items-center gap-2 ${active.type === 'critical' ? 'text-red-700' :
                       active.type === 'warning' ? 'text-amber-700' : 'text-blue-700'
                     }`}>

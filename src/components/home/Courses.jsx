@@ -186,33 +186,32 @@ const Courses = () => {
         {/* 4. HIMACHAL CONTEXT */}
         <div className="bg-slate-900 rounded-3xl p-8 md:p-12 text-white mb-16 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none"></div>
-          
-          <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                Why Our Courses Are Different in <span className="text-amber-400">Himachal Pradesh</span>
+          <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center min-w-0">
+            <div className="min-w-0 overflow-hidden text-left">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 break-words min-w-0 text-left leading-tight">
+                Why Our Courses Are Different in
+                <span className="block sm:inline text-amber-400 ml-0 sm:ml-2">Himachal Pradesh</span>
               </h3>
-              <p className="text-slate-300 mb-6">
+              <p className="text-slate-300 mb-6 min-w-0 text-left">
                 Driving in the hills requires special skills. We don't just teach you to drive; we teach you to survive and thrive on mountain roads.
               </p>
               <button 
                 onClick={() => handleWhatsApp("General Inquiry")}
-                className="text-amber-400 font-bold flex items-center gap-2 hover:text-amber-300 transition-colors"
+                className="text-amber-400 font-bold flex items-center gap-2 hover:text-amber-300 transition-colors text-left"
               >
                 Chat with an Instructor <ChevronRight size={18} />
               </button>
             </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 min-w-0">
               {[
                 { icon: Mountain, text: "Training on real hill roads" },
                 { icon: Route, text: "Practice on slopes & curves" },
                 { icon: Users, text: "Local instructors from Mandi" },
                 { icon: Shield, text: "Dual-control vehicles" }
               ].map((item, idx) => (
-                <div key={idx} className="bg-white/10 backdrop-blur-sm p-4 rounded-xl border border-white/10 flex items-center gap-3">
+                <div key={idx} className="bg-white/10 backdrop-blur-sm p-4 rounded-xl border border-white/10 flex items-center gap-3 min-w-0">
                   <item.icon className="text-amber-400 flex-shrink-0" size={20} />
-                  <span className="text-sm font-medium">{item.text}</span>
+                  <span className="text-sm font-medium min-w-0 break-words">{item.text}</span>
                 </div>
               ))}
             </div>

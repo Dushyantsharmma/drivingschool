@@ -77,7 +77,7 @@ const RTOInfo = () => {
   ];
 
   return (
-    <div id="rto-info" className="bg-white overflow-hidden p-6 md:p-8">
+    <div id="rto-info" className="bg-[#EFEDE0] overflow-hidden p-6 md:p-8">
       <SEO
         title="Karsog RTO (HP-30) Details & License Process"
         description="Address, fees, and document checklist for Karsog RTO (HP-30). Practice free RTO mock tests for your Learning License."
@@ -138,7 +138,7 @@ const RTOInfo = () => {
 
           {/* RIGHT CONTENT AREA */}
           <div className="lg:col-span-9">
-            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 min-h-[500px]">
+            <div className="bg-[#EFEDE0] rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100 min-h-[500px]">
               <AnimatePresence mode='wait'>
 
                 {/* 1. KARSOG RTO TAB (Timeline Only) */}
@@ -174,11 +174,11 @@ const RTOInfo = () => {
                     <div className="space-y-6 relative pl-4 border-l-2 border-dashed border-gray-200 ml-3">
                       {processSteps.map((step, idx) => (
                         <div key={idx} className="relative pl-6">
-                          <div className="absolute -left-[9px] top-1 w-4 h-4 bg-white border-4 border-navy rounded-full"></div>
+                          <div className="absolute -left-[9px] top-1 w-4 h-4 bg-[#EFEDE0] border-4 border-navy rounded-full"></div>
                           <div className="bg-gray-50 rounded-xl p-4 glow-card transition-colors group">
                             <div className="flex justify-between items-start mb-1">
                               <h4 className="font-bold text-navy text-sm group-hover:text-blue-700 transition-colors">{step.title}</h4>
-                              <span className="text-[10px] font-bold bg-white px-2 py-0.5 rounded border border-gray-200 text-gray-600 whitespace-nowrap">{step.time}</span>
+                              <span className="text-[10px] font-bold bg-[#EFEDE0] px-2 py-0.5 rounded border border-gray-200 text-gray-600 whitespace-nowrap">{step.time}</span>
                             </div>
                             <p className="text-xs text-gray-500 leading-relaxed">{step.desc}</p>
                           </div>
@@ -325,7 +325,7 @@ const RTOInfo = () => {
                             <th className="px-5 py-3 font-bold uppercase text-xs tracking-wider hidden sm:table-cell">Note</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100 bg-white">
+                          <tbody className="divide-y divide-gray-100 bg-[#EFEDE0]">
                           {fees.map((fee, idx) => (
                             <tr key={idx} className="hover:bg-gray-50 transition-colors">
                               <td className="px-5 py-3.5 font-medium text-navy">{fee.type}</td>
@@ -351,7 +351,7 @@ const RTOInfo = () => {
                     <h3 className="text-xl font-bold text-navy mb-6 flex items-center gap-2">
                       <Map className="text-gold" /> Driving Test Route
                     </h3>
-                    <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200">
+                    <div className="bg-[#EFEDE0] rounded-2xl overflow-hidden shadow-sm border border-gray-200">
                       <img
                         src={`${import.meta.env.BASE_URL}symbols/Driving Test Route.png`}
                         alt="Driving Test Route Diagram"
