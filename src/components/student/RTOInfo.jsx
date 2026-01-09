@@ -127,7 +127,6 @@ export default function RTOInfo() {
           {tab==="route" && (
             <div className="text-center">
               <img src="/symbols/Driving Test Route.png" className="mx-auto max-h-[400px]" />
-                            <img src="/symbols/Driving Test Route.png" className="mx-auto max-h-[400px]" loading="lazy" width="400" height="400" />
               <p className="text-sm text-slate-500 mt-2">
                 Official Karsog RTO Driving Test Track
               </p>

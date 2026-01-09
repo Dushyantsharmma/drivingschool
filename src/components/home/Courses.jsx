@@ -50,7 +50,7 @@ const COURSES = [
       "Uphill/Downhill mastery",
       "Night driving confidence"
     ],
-    duration: "15 Days",
+    duration: "26 Days",
     price: "Contact for Rates",
     cta: "Boost Skills",
     highlight: false,

@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Navigation from "./components/layout/Navigation";
 import Footer from "./components/layout/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-// import EnquiryFab from './components/EnquiryFab'; // Uncomment if used
+import EnquiryFab from './components/EnquiryFab';
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const CoursesPage = lazy(() => import("./pages/CoursesPage"));
@@ -32,6 +32,7 @@ function App() {
           </Routes>
         </Suspense>
       </main>
+      <EnquiryFab />
       <Footer />
     </div>
   );

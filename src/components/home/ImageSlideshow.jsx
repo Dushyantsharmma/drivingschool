@@ -1,28 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const SLIDES = [
   {
     id: 1,
     image: `${import.meta.env.BASE_URL}banners/Banner1.webp`,
-    title: "Master the Art of Hill Driving",
-    subtitle: "Navigate Himachal's toughest roads with confidence and precision.",
-    cta: "Start Learning"
   },
   {
     id: 2,
     image: `${import.meta.env.BASE_URL}banners/Banner2.webp`,
-    title: "Expert Guidance, Every Mile",
-    subtitle: "Learn from seasoned instructors with 20+ years of experience.",
-    cta: "Meet Instructors"
   },
   {
     id: 3,
     image: `${import.meta.env.BASE_URL}banners/Banner3.webp`,
-    title: "Safety is Our Priority",
-    subtitle: "Dual-control vehicles and comprehensive safety training.",
-    cta: "View Courses"
   },
 ];
 
@@ -77,7 +68,7 @@ const ImageSlideshow = () => {
   };
 
   return (
-    <section className="relative w-full h-[600px] lg:h-[85vh] overflow-hidden bg-slate-900 group">
+    <section className="relative w-full h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[85vh] overflow-hidden bg-slate-900 group">
       
       {/* 1. SLIDESHOW CONTAINER */}
       <AnimatePresence initial={false} custom={direction}>
@@ -98,9 +89,9 @@ const ImageSlideshow = () => {
             loading="lazy"
             width="1200"
             height="600"
-            // The Key Burns Effect (Slow Zoom)
             animate={{ scale: [1, 1.1] }}
             transition={{ duration: 8, ease: "linear" }}
+            style={{ minHeight: '100%', maxHeight: '100%' }}
           />
           
           {/* Cinematic Dark Overlay */}
@@ -110,26 +101,18 @@ const ImageSlideshow = () => {
 
       {/* 2. TEXT CONTENT */}
       <div className="absolute inset-0 flex items-center">
-        <div className="max-w-7xl mx-auto px-6 w-full">
+        <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 w-full">
           <motion.div
-            key={current} // Re-animate text on slide change
+            key={current}
             initial="hidden"
             animate="visible"
-            className="max-w-2xl"
+            className="max-w-xs xs:max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl"
           >
-            {/* Badge */}
-            <motion.div 
-              variants={textVariants} 
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-sm"
-            >
-              Driving Excellence
-            </motion.div>
-
             {/* Title */}
             <motion.h1 
               variants={textVariants}
               transition={{ delay: 0.1 }}
-              className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 xs:mb-5 md:mb-6 leading-snug xs:leading-tight md:leading-tight drop-shadow-lg break-words"
+              className="text-lg xs:text-xl sm:text-2xl md:text-4xl lg:text-7xl font-bold text-white mb-2 xs:mb-3 sm:mb-4 md:mb-6 lg:mb-8 leading-snug xs:leading-tight md:leading-tight drop-shadow-lg break-words"
             >
               {SLIDES[current].title}
             </motion.h1>
@@ -138,20 +121,10 @@ const ImageSlideshow = () => {
             <motion.p 
               variants={textVariants}
               transition={{ delay: 0.2 }}
-              className="text-base xs:text-lg sm:text-xl md:text-xl text-slate-200 mb-6 xs:mb-7 md:mb-8 leading-normal xs:leading-relaxed max-w-xs xs:max-w-md sm:max-w-lg drop-shadow-md"
+              className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl text-slate-200 mb-3 xs:mb-4 sm:mb-6 md:mb-8 leading-normal xs:leading-relaxed max-w-xs xs:max-w-md sm:max-w-lg drop-shadow-md"
             >
               {SLIDES[current].subtitle}
             </motion.p>
-
-            {/* CTA Button */}
-            <motion.button
-              variants={textVariants}
-              transition={{ delay: 0.3 }}
-              className="group relative overflow-hidden bg-amber-500 text-slate-900 px-8 py-4 rounded-full font-bold text-base flex items-center gap-3 hover:bg-amber-400 transition-all shadow-lg hover:shadow-amber-500/40 active:scale-95"
-            >
-              <span className="relative z-10">{SLIDES[current].cta}</span>
-              <ArrowRight size={20} className="relative z-10 transition-transform group-hover:translate-x-1" />
-            </motion.button>
           </motion.div>
         </div>
       </div>

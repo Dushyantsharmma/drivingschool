@@ -39,9 +39,9 @@ export default function ContactPage() {
 
             <Info title="Opening Hours" icon={<Clock />}>
               <div className="space-y-1">
-                {["Mon","Tue","Wed","Thu","Fri","Sat"].map(d=>(
+                {["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"].map(d=>(
                   <div key={d} className="flex justify-between">
-                    <span>{d}</span><span className="font-bold text-green-700">08:00 – 19:00</span>
+                    <span>{d}</span><span className="font-bold text-green-700">08:00 AM – 7:00 PM</span>
                   </div>
                 ))}
                 <div className="flex justify-between">
@@ -56,8 +56,8 @@ export default function ContactPage() {
                 <li>Bhanthal</li>
                 <li>Karsog</li>
                 <li>Sanarli</li>
-                <li>Pangna</li>
-                <li>Nearby villages under HP-30</li>
+                <li>Baral Bypass</li>
+                <li>Nearby villages in Karsog</li>
               </ul>
             </Info>
 

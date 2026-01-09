@@ -1,171 +1,270 @@
-/**
- * Google Apps Script for Raj Ann Raj Driving School Registration Form
- * This script receives form data from the website and stores it in Google Sheets
- *
- * IMPORTANT: You MUST replace the SHEET_ID below with YOUR actual Google Sheet ID
- *
- * HOW TO FIND YOUR SHEET ID:
- * 1. Open your Google Sheet
- * 2. Look at the URL: https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_HERE/edit
- * 3. Copy the ID part and replace "1S7Y9P-RvgS71w__6gxCKh4dpAvxBff1hdQu3Gc8c3WM" below
- */
+// ================= CONFIGURATION =================
+const SHEET_ID = "1S7Y9P-RvgS71w__6gxCKh4dpAvxBff1hdQu3Gc8c3WM";
+const SHEET_NAME = "Sheet1";
+const CLIENT_EMAIL = "rajannraj.dts@gmail.com";
+const EMAIL_SUBJECT = "🚗 Student Status Update";
 
-// ⚠️ CHANGE THIS TO YOUR GOOGLE SHEET ID ⚠️
-const SHEET_ID = "1S7Y9P-RvgS71w__6gxCKh4dpAvxBff1hdQu3Gc8c3WM"; // Replace with your actual Sheet ID
-const SHEET_NAME = "Sheet1"; // Set this to the exact tab name you want to write to
+// Capacity Limit per Slot
+const MAX_CAPACITY = {
+  "Morning (8 AM - 11 AM)": 5,
+  "Afternoon (12 PM - 4 PM)": 5,
+  "Evening (5 PM - 7 PM)": 5,
+};
 
-function doPost(e) {
+// ================= 1. GET HANDLER (Availability) =================
+function doGet(e) {
+  const lock = LockService.getScriptLock();
+  lock.tryLock(10000);
+
   try {
-    // Basic guard to avoid null dereference when the request is malformed
-    if (!e || !e.postData || !e.postData.contents) {
-      throw new Error("Missing postData in request");
+    const doc = SpreadsheetApp.openById(SHEET_ID);
+    const sheet = doc.getSheetByName(SHEET_NAME);
+
+    let availability = {
+      "Morning (8 AM - 11 AM)": true,
+      "Afternoon (12 PM - 4 PM)": true,
+      "Evening (5 PM - 7 PM)": true,
+    };
+
+    if (sheet.getLastRow() > 1) {
+      // Fetch Time Slot (Col F) and Timestamp (Col H)
+      const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 9).getValues();
+      const todayStr = new Date().toDateString();
+
+      let counts = {
+        "Morning (8 AM - 11 AM)": 0,
+        "Afternoon (12 PM - 4 PM)": 0,
+        "Evening (5 PM - 7 PM)": 0,
+      };
+
+      data.forEach((row) => {
+        if (row[7]) {
+          // Check Timestamp exists
+          const rowDate = new Date(row[7]);
+          if (rowDate.toDateString() === todayStr) {
+            const slot = row[5]; // Time Slot
+            if (counts[slot] !== undefined) counts[slot]++;
+          }
+        }
+      });
+
+      for (const [slot, count] of Object.entries(counts)) {
+        if (count >= MAX_CAPACITY[slot]) availability[slot] = false;
+      }
     }
 
-    Logger.log("Request received: " + e.postData.contents);
+    return response({ status: "success", availability: availability });
+  } catch (err) {
+    return response({ status: "error", message: err.toString() });
+  } finally {
+    lock.releaseLock();
+  }
+}
 
-    // Open the specific spreadsheet by ID and resolve the sheet/tab safely
-    const ss = SpreadsheetApp.openById(SHEET_ID);
-    let sheet = ss.getSheetByName(SHEET_NAME);
+// ================= 2. POST HANDLER (Strong Logic) =================
+function doPost(e) {
+  const lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(30000);
+  } catch (e) {
+    return response({ status: "error", message: "Server Busy" });
+  }
 
-    // Create the sheet if it does not exist to avoid null getDataRange
-    if (!sheet) {
-      sheet = ss.insertSheet(SHEET_NAME);
-    }
+  try {
+    const doc = SpreadsheetApp.openById(SHEET_ID);
+    let sheet = doc.getSheetByName(SHEET_NAME);
 
-    // If no headers yet, add them once so columns stay consistent
+    // Auto-Create Sheet/Headers
+    if (!sheet) sheet = doc.insertSheet(SHEET_NAME);
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
-        "Timestamp",
+      const headers = [
         "Full Name",
         "Mobile Number",
+        "Gender",
         "Date of Birth",
         "Skill Level",
         "Time Slot",
         "Pickup Location",
-      ]);
+        "Timestamp",
+        "Status",
+      ];
+      sheet.appendRow(headers);
+      sheet
+        .getRange(1, 1, 1, headers.length)
+        .setFontWeight("bold")
+        .setBackground("#fbbf24");
+      sheet.setFrozenRows(1);
     }
 
-    // Parse the incoming JSON data
     const data = JSON.parse(e.postData.contents);
-    Logger.log("Parsed data: " + JSON.stringify(data));
 
-    // Extract form fields
-    const timestamp = new Date();
-    const fullName = data.fullName || "";
-    const mobile = data.mobile || "";
-    const dateOfBirth = data.dateOfBirth || "";
-    const skillLevel = data.skillLevel || "";
-    const timeSlot = data.timeSlot || "";
-    const pickupLocation = data.pickupLocation || "";
+    // Honeypot (Bot Protection)
+    if (data.honeypot)
+      return response({ status: "success", action: "bot_blocked" });
 
-    Logger.log(
-      "About to append row: " +
-        [
-          timestamp,
-          fullName,
-          mobile,
-          dateOfBirth,
-          skillLevel,
-          timeSlot,
-          pickupLocation,
-        ]
-    );
+    // --- 1. NORMALIZE INPUT DATA ---
+    const inputMobile = String(data.mobile || "")
+      .replace(/\D/g, "")
+      .slice(-10);
+    const inputName = toTitleCase(data.fullName);
+    const inputGender = data.gender || "Not Specified";
+    // Ensure DOB is strict YYYY-MM-DD string for comparison
+    const inputDOB = data.dateOfBirth
+      ? new Date(data.dateOfBirth).toISOString().split("T")[0]
+      : "";
 
-    // Append the data to the sheet
-    sheet.appendRow([
-      timestamp,
-      fullName,
-      mobile,
-      dateOfBirth,
-      skillLevel,
-      timeSlot,
-      pickupLocation,
-    ]);
+    if (!inputName || inputMobile.length < 10) throw new Error("Invalid Data");
 
-    Logger.log("Row appended successfully");
+    // --- 2. STRONG DUPLICATE CHECK ---
+    const lastRow = sheet.getLastRow();
+    let rowIndex = -1;
+    let isUpdate = false;
+    let updateReason = "New";
 
-    // Send email notification
-    try {
-      const emailRecipient = "pushapraj.sugam@gmail.com"; // Raj's email
-      const emailSubject = "🚗 New Driving Lesson Enquiry - " + fullName;
-      const emailBody =
-        "New Student Registration\n\n" +
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
-        "📅 Date & Time: " +
-        timestamp.toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }) +
-        "\n\n" +
-        "👤 Full Name: " +
-        fullName +
-        "\n" +
-        "📱 Mobile: " +
-        mobile +
-        "\n" +
-        "🎂 Date of Birth: " +
-        dateOfBirth +
-        "\n" +
-        "🎯 Skill Level: " +
-        skillLevel +
-        "\n" +
-        "⏰ Preferred Time: " +
-        timeSlot +
-        "\n" +
-        "📍 Pickup Location: " +
-        pickupLocation +
-        "\n\n" +
-        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
-        "Action Required: Please contact the student as soon as possible.\n\n" +
-        "WhatsApp Link: https://wa.me/91" +
-        mobile.replace(/\D/g, "").slice(-10) +
-        "\n" +
-        "Call Link: tel:+" +
-        mobile.replace(/\D/g, "") +
-        "\n\n" +
-        "—\n" +
-        "Raj Ann Raj Driving Training School\n" +
-        "Automated Registration System";
+    if (lastRow > 1) {
+      // Fetch Name(A), Mobile(B), Gender(C), DOB(D) to compare
+      // Range: A2:D[lastRow]
+      const existingData = sheet.getRange(2, 1, lastRow - 1, 4).getValues();
 
-      // Send the email
-      MailApp.sendEmail(emailRecipient, emailSubject, emailBody);
-    } catch (emailError) {
-      Logger.log("Email error: " + emailError.toString());
-      // Continue even if email fails
+      for (let i = 0; i < existingData.length; i++) {
+        const rowName = String(existingData[i][0]).trim().toLowerCase();
+        const rowMobile = String(existingData[i][1])
+          .replace(/\D/g, "")
+          .slice(-10);
+
+        // Handle Sheet Date Object vs Input String
+        let rowDOB = "";
+        if (existingData[i][3] instanceof Date) {
+          rowDOB = existingData[i][3].toISOString().split("T")[0];
+        } else {
+          rowDOB = String(existingData[i][3]);
+        }
+
+        // CHECK 1: Mobile Match
+        if (rowMobile === inputMobile) {
+          rowIndex = i + 2;
+          isUpdate = true;
+          updateReason = "Mobile Match";
+          break;
+        }
+
+        // CHECK 2: Name + DOB Match (The "Dushyant" Fix)
+        // If names match (case-insensitive) AND DOBs match
+        if (rowName === inputName.toLowerCase() && rowDOB === inputDOB) {
+          rowIndex = i + 2;
+          isUpdate = true;
+          updateReason = "Name+DOB Match";
+          break;
+        }
+      }
     }
 
-    // Return success response
-    return ContentService.createTextOutput(
-      JSON.stringify({
-        status: "success",
-        message: "Form submitted successfully",
-      })
-    ).setMimeType(ContentService.MimeType.JSON);
-  } catch (error) {
-    // Return error response
-    return ContentService.createTextOutput(
-      JSON.stringify({
-        status: "error",
-        message: error.toString(),
-      })
-    ).setMimeType(ContentService.MimeType.JSON);
+    const timestamp = new Date().toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata",
+    });
+    const statusLabel = isUpdate ? "Updated" : "New";
+
+    const rowData = [
+      inputName, // A
+      inputMobile, // B (If Name match, this updates the mobile number!)
+      inputGender, // C
+      data.dateOfBirth, // D
+      data.skillLevel, // E
+      data.timeSlot, // F
+      data.pickupLocation, // G
+      timestamp, // H
+      statusLabel, // I
+    ];
+
+    // --- 3. WRITE TO SHEET ---
+    if (isUpdate) {
+      // Spam Prevent: 45s cooldown
+      const lastUpdateCell = sheet.getRange(rowIndex, 8).getValue();
+      if (lastUpdateCell) {
+        const diff = (new Date() - new Date(lastUpdateCell)) / 1000;
+        if (diff < 45)
+          return response({ status: "success", action: "spam_prevention" });
+      }
+
+      sheet.getRange(rowIndex, 1, 1, rowData.length).setValues([rowData]);
+      sheet.getRange(rowIndex, 1, 1, rowData.length).setBackground("#e0f2fe"); // Light Blue for Updates
+    } else {
+      sheet.appendRow(rowData);
+    }
+
+    // --- 4. NOTIFICATION ---
+    try {
+      sendNotification(rowData, isUpdate, updateReason);
+    } catch (e) {
+      console.log(e);
+    }
+
+    return response({
+      status: "success",
+      action: isUpdate ? "updated" : "created",
+    });
+  } catch (err) {
+    return response({ status: "error", message: err.toString() });
+  } finally {
+    lock.releaseLock();
   }
 }
 
-// Test function to verify the script is working
-function testScript() {
-  const testData = {
-    fullName: "Test User",
-    mobile: "+919999999999",
-    dateOfBirth: "2000-01-15",
-    skillLevel: "beginner",
-    timeSlot: "morning",
-    pickupLocation: "Mandi",
-  };
+// ================= HELPERS =================
+function toTitleCase(str) {
+  return str
+    ? str.replace(
+        /\w\S*/g,
+        (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+      )
+    : "";
+}
 
-  const mockEvent = {
-    postData: {
-      contents: JSON.stringify(testData),
-    },
-  };
+function response(data) {
+  return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
+    ContentService.MimeType.JSON
+  );
+}
 
-  const response = doPost(mockEvent);
-  Logger.log(response.getContent());
+function sendNotification(row, isUpdate, reason) {
+  const [name, mobile, gender, dob, skill, time, loc] = row;
+  const typeText = isUpdate ? "♻️ UPDATED ENTRY" : "✅ NEW REGISTRATION";
+  const color = isUpdate ? "#0284c7" : "#10b981"; // Blue for Update, Green for New
+
+  const replyText = `Hi ${name}, thank you for registering with Raj Ann Raj Driving School! 🚗 We have received your request for the ${time} slot.`;
+  const waLink = `https://wa.me/91${mobile}?text=${encodeURIComponent(
+    replyText
+  )}`;
+
+  const html = `
+    <div style="font-family:sans-serif;border:1px solid #ddd;padding:0;border-radius:10px;overflow:hidden;max-width:500px;">
+      <div style="background:${color};padding:15px;color:white;text-align:center;">
+        <h2 style="margin:0;">${typeText}</h2>
+        ${
+          isUpdate
+            ? `<p style="margin:5px 0 0 0;font-size:12px;opacity:0.9;">Detected via: ${reason}</p>`
+            : ""
+        }
+      </div>
+      <div style="padding:20px;">
+        <table style="width:100%;border-collapse:collapse;">
+          <tr><td style="padding:8px 0;color:#64748b;font-weight:bold;">Name:</td><td>${name}</td></tr>
+          <tr><td style="padding:8px 0;color:#64748b;font-weight:bold;">Mobile:</td><td>${mobile}</td></tr>
+          <tr><td style="padding:8px 0;color:#64748b;font-weight:bold;">Gender:</td><td>${gender}</td></tr>
+          <tr><td style="padding:8px 0;color:#64748b;font-weight:bold;">Slot:</td><td>${time}</td></tr>
+          <tr><td style="padding:8px 0;color:#64748b;font-weight:bold;">Location:</td><td>${loc}</td></tr>
+        </table>
+        <div style="margin-top:25px;text-align:center;">
+          <a href="${waLink}" style="background:#25D366;color:white;padding:12px 25px;text-decoration:none;border-radius:50px;font-weight:bold;">
+            Reply on WhatsApp 
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+  MailApp.sendEmail({
+    to: CLIENT_EMAIL,
+    subject: `${typeText}: ${name}`,
+    htmlBody: html,
+  });
 }

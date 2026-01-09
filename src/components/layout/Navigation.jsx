@@ -157,8 +157,8 @@ const Navigation = () => {
                 />
              </div>
              <div>
-                <div className="font-bold text-white text-base leading-none">Raj Ann Raj</div>
-                <div className="text-[10px] text-amber-500 font-bold tracking-wider mt-0.5">DRIVING SCHOOL</div>
+                <div className="font-bold text-[#e57e33] text-base leading-none">RAJ ANN RAJ</div>
+                <div className="text-[10px] text-white font-bold tracking-wider mt-0.5">Driving Training School</div>
              </div>
           </div>
 
@@ -204,8 +204,8 @@ const Navigation = () => {
                       alt="Logo"
                    />
                    <div>
-                      <h2 className="text-white font-bold text-lg leading-none">Raj Ann Raj</h2>
-                      <p className="text-xs text-amber-500 font-bold tracking-wider mt-0.5">EST. 2005</p>
+                      <h2 className="text-amber-500 font-bold text-lg leading-none">Raj Ann Raj</h2>
+                      <p className="text-xs text-white font-bold tracking-wider mt-0.5">EST. 2005</p>
                    </div>
                 </div>
                 <button

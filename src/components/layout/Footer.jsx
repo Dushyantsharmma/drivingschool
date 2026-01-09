@@ -1,25 +1,28 @@
-import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, MessageCircle, Github } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Github } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer className="bg-[#0B1220] text-slate-300">
-
       {/* ===== TOP ===== */}
       <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-
         {/* BRAND */}
         <div className="space-y-5">
           <div className="flex items-center gap-4">
-            <img
-              src={`${import.meta.env.BASE_URL}branding/raj-ann-raj-logo.jpeg`}
-              alt="Raj Ann Raj"
-              className="w-14 h-14 rounded-full object-cover"
-            />
+            <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center bg-transparent">
+              <img
+                src={"/branding/raj-ann-raj-logo.jpeg"}
+                alt={t("Raj Ann Raj")}
+                className="w-20 h-20 object-cover"
+                loading="lazy"
+              />
+            </div>
             <div>
-              <h3 className="text-xl font-bold text-white">Raj Ann Raj</h3>
-              <p className="text-amber-500 text-xs font-bold tracking-widest uppercase">
-                Driving School
+              <h3 className="text-xl font-bold" style={{ color: '#E57E33' }}>{t("Raj Ann Raj")}</h3>
+              <p className="text-xs font-bold tracking-widest text-white">
+                Driving Training School
               </p>
             </div>
           </div>
@@ -27,20 +30,18 @@ const Footer = () => {
             Professional hill driving training in Himachal Pradesh. 
             Learn to drive safely, confidently, and independently.
           </p>
-
           <div className="flex gap-4">
-            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition">
+            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition" href="#">
               <Facebook size={16} />
             </a>
-            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition">
+            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition" href="#">
               <Instagram size={16} />
             </a>
-            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition">
+            <a className="p-2 bg-white/5 rounded-full hover:bg-amber-500 transition" href="#">
               <Youtube size={16} />
             </a>
           </div>
         </div>
-
         {/* QUICK LINKS */}
         <div>
           <h4 className="text-white font-bold mb-6">Quick Links</h4>
@@ -51,7 +52,6 @@ const Footer = () => {
             <li><Link to="/contact" className="hover:text-amber-500">Contact</Link></li>
           </ul>
         </div>
-
         {/* CONTACT */}
         <div>
           <h4 className="text-white font-bold mb-6">Contact</h4>
@@ -70,7 +70,6 @@ const Footer = () => {
             </div>
           </div>
         </div>
-
         {/* CTA */}
         <div className="space-y-6">
           <h4 className="text-white font-bold">Get in Touch</h4>
@@ -78,7 +77,6 @@ const Footer = () => {
             Want to start learning driving in Himachal hills? 
             Contact us today.
           </p>
-
           <div className="flex gap-4">
             <a
               href="tel:+919882034930"
@@ -94,22 +92,19 @@ const Footer = () => {
             </a>
           </div>
         </div>
-
       </div>
-
       {/* ===== BOTTOM BAR ===== */}
       <div className="border-t border-white/10 py-6">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-3">
-          <p>© {new Date().getFullYear()} Raj Ann Raj Driving School</p>
+          <p>© {new Date().getFullYear()} {t("Raj Ann Raj")} Driving School</p>
           <p className="flex items-center gap-2">
             Built by
-            <a href="https://github.com/Dushyantsharmma" target="_blank" className="flex items-center gap-1 hover:text-amber-500">
+            <a href="https://github.com/Dushyantsharmma" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-amber-500">
               <Github size={12} /> Dushyant Sharma
             </a>
           </p>
         </div>
       </div>
-
     </footer>
   );
 };
